@@ -1,0 +1,11 @@
+{
+  "name": "whatsapp-moderator-bot",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "@open-wa/wa-automate": "^5.0.0"
+  }
+}
