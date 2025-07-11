@@ -1,0 +1,30 @@
+const { create } = require('@open-wa/wa-automate');
+
+create({
+  sessionId: 'moderator-bot',
+  multiDevice: true,
+  qrTimeout: 60,
+  headless: true
+}).then(client => start(client));
+
+function start(client) {
+  console.log("✅ Bot avviato!");
+
+  client.onGroupParticipantsChanged(async event => {
+    const { chat, action, who } = event;
+    if (action === 'add') {
+      await client.sendText(chat, `Benvenuto/a ${who} 🎉\nPresentati con foto e anno.`);
+    } else if (action === 'remove') {
+      await client.sendText(chat, `${who} ci ha lasciati... per ora 😔`);
+    }
+  });
+
+  client.onMessage(async message => {
+    const { body, from } = message;
+    if (body === '!ping') {
+      await client.sendText(from, '🏓 Pong!');
+    } else if (body === '!help') {
+      await client.sendText(from, '🤖 Comandi disponibili:\n!ping\n!help');
+    }
+  });
+}
